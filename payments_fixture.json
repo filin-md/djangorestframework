@@ -1,0 +1,24 @@
+[
+  {
+    "model": "main.payments",
+    "pk": 1,
+    "fields": {
+      "date": "2023-10-10",
+      "course": 1,
+      "lesson": null,
+      "amount": 100,
+      "method": "cash"
+    }
+  },
+  {
+    "model": "main.payments",
+    "pk": 2,
+    "fields": {
+      "date": "2023-10-11",
+      "course": null,
+      "lesson": 1,
+      "amount": 50,
+      "method": "card"
+    }
+  }
+]
