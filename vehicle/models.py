@@ -1,10 +1,14 @@
 from django.db import models
 
+from config import settings
+
 
 # Create your models here.
 class Car(models.Model):
     title = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(verbose_name='описание')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                              verbose_name='владелец')
 
     def __str__(self):
         return f'{self.title}'
@@ -17,6 +21,8 @@ class Car(models.Model):
 class Moto(models.Model):
     title = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(verbose_name='описание')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                              verbose_name='владелец')
 
     def __str__(self):
         return f'{self.title}'
@@ -33,8 +39,8 @@ class Milage(models.Model):
     milage = models.PositiveIntegerField(verbose_name='пробег')
     year = models.PositiveSmallIntegerField(verbose_name='год регистрации')
 
-    def  __str__(self):
-        return f'{self.moto if self.moto  else self.car} - {self.car}'
+    def __str__(self):
+        return f'{self.moto if self.moto else self.car} - {self.car}'
 
     class Meta:
         verbose_name = 'пробег'
