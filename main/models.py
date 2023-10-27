@@ -21,6 +21,7 @@ class Lesson(models.Model):
     preview = models.ImageField(upload_to='main/', verbose_name='превью', **NULLABLE)
     link = models.URLField(verbose_name='ссылка', **NULLABLE)
 
+
 class Payments(models.Model):
     PAYMENT_METHOD = [
         ('cash', 'Наличные'),
@@ -32,5 +33,9 @@ class Payments(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, **NULLABLE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, **NULLABLE)
     amount = models.PositiveIntegerField(verbose_name='сумма оплаты')
-    method = models.CharField(max_length=4, choices=PAYMENT_METHOD,verbose_name='метод оплаты')
+    method = models.CharField(max_length=4, choices=PAYMENT_METHOD, verbose_name='метод оплаты')
 
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='пользователь')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, **NULLABLE, verbose_name='курс')
