@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from main.tasks import send_course_update_notification
 from main.models import Course, Lesson, Payments, Subscription
 from main.validators import validator_links
 
@@ -21,6 +23,11 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
 
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        send_course_update_notification.delay(instance.user.email, instance.title)
+        return instance
+
     def get_lesson_count(self, instance):
         return instance.lesson_set.count()
 
@@ -39,3 +46,13 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = '__all__'
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Добавление пользовательских полей в токен
+        token['email'] = user.email
+
+        return token

@@ -1,15 +1,17 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics
 from rest_framework.filters import OrderingFilter
-import stripe
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from config.settings import STRIPE_SECRET_KEY
 from main.models import Course, Lesson, Payments, Subscription
 from main.paginators import MainPaginator
 from main.permissions import IsOwnerOrStaff
-from main.serializers import CourseSerializer, LessonSerializer, PaymentsSerializer, SubscriptionSerializer
+from main.serializers import CourseSerializer, LessonSerializer, PaymentsSerializer, SubscriptionSerializer, \
+    MyTokenObtainPairSerializer
 
-stripe.api_key = STRIPE_SECRET_KEY
+
+# stripe.api_key = STRIPE_SECRET_KEY
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -74,3 +76,6 @@ def retrieve_payment():
     stripe.PaymentIntent.retrieve(
         "pi_1JDmWxJX9HHJ5bycpCPrP2t5",
     )
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer

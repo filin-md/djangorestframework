@@ -9,6 +9,7 @@ class Car(models.Model):
     description = models.TextField(verbose_name='описание')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
                               verbose_name='владелец')
+    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
     def __str__(self):
         return f'{self.title}'
@@ -23,6 +24,7 @@ class Moto(models.Model):
     description = models.TextField(verbose_name='описание')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
                               verbose_name='владелец')
+    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
     def __str__(self):
         return f'{self.title}'
