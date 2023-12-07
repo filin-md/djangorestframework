@@ -87,9 +87,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rest',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '12345'
+        'PASSWORD': '12345',
+        'HOST': 'db'
     }
 }
 
@@ -169,10 +170,10 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_51O71jZB00lsYbjnPARBh4QozPGj9GPW3BGoeQv6AwtJ78
 # Настройки для Celery
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://localhost:6379' # Например, Redis, который по умолчанию работает на порту 6379
+CELERY_BROKER_URL = 'redis://redis:6379' # Например, Redis, который по умолчанию работает на порту 6379
 
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
